@@ -2,8 +2,28 @@
 
 This repository presents the source code for analyzing the airborne COVID-19 transmission risk associated with holding in-person classes on university campuses.
 
-The code requires information regarding the classrooms, such as their location name, area, and air change rate. Furthermore, it needs information regarding the students' schedule for the semester, such as their courses and the location and time of those courses. All of the required datasets can be generated via the synthetic generator provided in the source codes. 
-
-Given this information, the provided code will generate the students' infection probability distribution after operating the university for one week of classes. Various policies such as hybrid scheduling, mask-wearing, and occupancy reduction can be evaluated using this repository to help with making effective decisions for the universities in the case of an epidemic.
-
 <ins>***This model can be replicated by other universities to help mitigate Covid-19 cases***</ins>.
+
+## Data Source
+
+This project used the campus and students' registration of a large university. The code requires information regarding the classrooms, such as their location name, area, and air change rate. Furthermore, it needs information regarding the students' schedule for the semester, such as their courses and the location and time of those courses. All of the required datasets can be generated via the synthetic generator provided in the source codes. 
+
+## Instructions for running the codes
+
+The requirements.txt file contains the modules needed to run these scripts and can be installed by running the following command in the terminal:
+* pip install -r requirements.txt
+
+## Running **run_infection_prob.py**
+
+This main file can be found in the [/source_code](https://github.com/ANRGUSC/covid-university-simulation/tree/main/source_code) folder.
+
+Input:
+- The campus and students' registration dataset
+- Infection model parameters
+- Policies parameters (Hybrid scheduling, mask wearing, occupancy reduction)
+
+Output:
+- Histogram plot and csv file of the infection probability distribution of the students
+
+
+
