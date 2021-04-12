@@ -131,6 +131,25 @@ def generate_students_schedule(num_students, course_schedule, max_num_courses, o
     return students_schedule
 
 
+# This function generate synthetic data based on the given parameters
+def generate_data(num_students, num_courses, room_min_area, room_max_area, room_min_ach, room_max_ach,
+                  schedule_start_time, schedule_end_time, course_min_duration, course_max_duration,
+                  max_num_sessions_per_course, max_num_courses_per_student, room_data_path, course_schedule_path,
+                  student_schedule_path):
+
+    rooms_data = generate_room_data(10, room_min_area, room_max_area, room_min_ach, room_max_ach, room_data_path)
+
+    locations = list(rooms_data["LOCATION"])
+    course_schedule = generate_course_schedule(num_courses, locations, max_num_sessions_per_course,
+                                                   schedule_start_time, schedule_end_time,
+                                                   course_min_duration, course_max_duration, course_schedule_path)
+
+    student_schedule = generate_students_schedule(num_students, course_schedule, max_num_courses_per_student,
+                                                      student_schedule_path)
+
+    return student_schedule
+
+
 # This function helps with saving the data with a correct format.
 def save_dataset(data, path):
     # Convert the columns to string
@@ -142,3 +161,38 @@ def save_dataset(data, path):
     data["END_TIME"] = (data["END_TIME"].str[7:15])
 
     data.to_csv(path, index=False)
+
+
+def main():
+    # Set room parameters
+    room_min_area = 140                 # Unit: SQFT
+    room_max_area = 3668                # Unit: SQFT
+    room_min_ach = 0.0005               # Air change rate per hour
+    room_max_ach = 0.005                # Air change rate per hour
+
+    # Set schedule parameters
+    schedule_start_time = "06:00:00"
+    schedule_end_time = "23:00:00"
+    course_min_duration = "01:00:00"
+    course_max_duration = "04:00:00"
+
+    num_courses = 500
+    max_num_sessions_per_course = 3
+
+    num_students = 5000
+    max_num_courses_per_student = 3
+
+    # Set output path for the generated synthetic dataset
+    room_data_path = "./Output/Synthetic_Data/Rooms_Data.csv"
+    course_schedule_path = "./Output/Synthetic_Data/Course_Schedule.csv"
+    student_schedule_path = "./Output/Synthetic_Data/Student_Schedule.csv"
+
+    # Generate synthetic data
+    generate_data(num_students, num_courses, room_min_area, room_max_area, room_min_ach, room_max_ach,
+                  schedule_start_time, schedule_end_time, course_min_duration, course_max_duration,
+                  max_num_sessions_per_course, max_num_courses_per_student, room_data_path, course_schedule_path,
+                  student_schedule_path)
+
+
+if __name__ == "__main__":
+    main()

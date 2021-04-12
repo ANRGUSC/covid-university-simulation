@@ -10,11 +10,12 @@ def calculate_course_durations(student_schedule_path, output_path):
     student_schedule["DURATION"] = student_schedule["END_TIME"] - student_schedule["START_TIME"]
 
     save_dataset(student_schedule, output_path)
-    return student_schedule
+    return output_path
 
 
 # This function generates course schedule given the uploaded student schedule (whether synthetic or not)
-def generate_course_schedule(student_schedule, output_path):
+def generate_course_schedule(dataset_path_student_schedule, output_path):
+    student_schedule = pd.read_csv(dataset_path_student_schedule)
     student_schedule["ENROLLMENT"] = 1
     student_schedule["STUDENT_ID"] = student_schedule["STUDENT_ID"].astype(str)
 
@@ -31,7 +32,7 @@ def generate_course_schedule(student_schedule, output_path):
                                        "DURATION", "ENROLLMENT", "STUDENT_ID"]]
     course_schedule.to_csv(output_path, index=False)
 
-    return course_schedule
+    return output_path
 
 
 # This function helps with saving the data with a correct format.
